@@ -1,6 +1,4 @@
-import {Text} from "react-native";
 import React from "react";
-import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Home from "./Home";
 import Lists from './Lists'

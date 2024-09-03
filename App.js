@@ -6,7 +6,8 @@ import {PaperProvider} from "react-native-paper";
 
 //Routes
 import Login from './Routes/Login'
-import Root from "./Routes/Root";
+import Root from "./Routes/Roots/Root";
+import CreateNewAccount from "./Routes/CreateNewAccount";
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ export default function App() {
           <NavigationContainer>
               <Stack.Navigator initialRouteName="Login">
                   <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
+                  <Stack.Screen name="CreateNewAccount" component={CreateNewAccount} options={{headerShown: false}} />
                   <Stack.Screen name="Root" component={Root} options={{ headerBackButtonMenuEnabled: true, headerShown: false }} />
               </Stack.Navigator>
           </NavigationContainer>

@@ -3,18 +3,17 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
 
-export default function Login({navigation})
-{
+export default function Login({navigation}) {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [hasErrors, setHasErrors] = useState<boolean>(false);
 
 
     async function attemptLogin() {
-        let validAttempt : boolean = false;
+        let validAttempt: boolean = false;
         try {
             let response =
-                await axios.post('http://localhost:5081/UserLogin', { email, password });
+                await axios.post('http://localhost:5081/api/UserLogin', {email, password});
             validAttempt = response.data;
         } catch (error) {
             console.error('Login attempt failed:', error);
@@ -36,16 +35,24 @@ export default function Login({navigation})
         }
     }
 
-    return(
+    const navigateToRegister = () => {
+        navigation.navigate('CreateNewAccount');
+    }
 
-        <View style={{flex:1, justifyContent: 'center'}}>
-            <Text style={{marginLeft:5}} variant="displayLarge" >Login</Text>
-            <TextInput  autoCapitalize="none" style={{marginBottom: 10}} label="Email" value={email} onChangeText={(text) => setEmail(text)} />
-            <TextInput autoCapitalize="none" style={{marginBottom: 10}} secureTextEntry={true} label="Password" onChangeText={(text) => setPassword(text)}/>
-            <Button onPress={() => login()} mode="outlined" style={{width: 200, marginHorizontal:"auto"}} buttonColor="grey" textColor="white">Login</Button>
-            <HelperText style={{marginBottom:5, marginHorizontal: "auto"}} type="error" visible={hasErrors}>
+    return (
+
+        <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text style={{marginLeft: 5}} variant="displayLarge">Login</Text>
+            <TextInput autoCapitalize="none" style={{marginBottom: 10}} label="Email" value={email}
+                       onChangeText={(text) => setEmail(text)}/>
+            <TextInput autoCapitalize="none" style={{marginBottom: 10}} secureTextEntry={true} label="Password"
+                       onChangeText={(text) => setPassword(text)}/>
+            <Button onPress={() => login()} mode="outlined" style={{width: 200, marginHorizontal: "auto"}}
+                    buttonColor="grey" textColor="white">Login</Button>
+            <HelperText style={{marginBottom: 5, marginHorizontal: "auto"}} type="error" visible={hasErrors}>
                 Email or Password is invalid.
             </HelperText>
+            <Button onPress={navigateToRegister}>Register here</Button>
         </View>
     )
 
