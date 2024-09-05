@@ -1,5 +1,4 @@
-Simple MVP to flesh out some ideas and functionality
-Keep in mind this is an MVP not a finshed product.
+Simple MVP to flesh out some ideas and functionality. Keep in mind this is an MVP not a finshed product.
 
 <img width="331" alt="image" src="https://github.com/user-attachments/assets/19591fd2-b9f6-44ef-b415-908d9ed6e558">
 
