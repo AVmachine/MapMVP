@@ -1,5 +1,6 @@
 import { FlatList, Text, View, StyleSheet } from "react-native";
 import React from "react";
+import store from "../../store";
 
 export default function Lists() {
     const dummyList = [
@@ -9,6 +10,8 @@ export default function Lists() {
         { key: 4, name: "Hadis's List" },
         { key: 5, name: "Scott's List" },
     ];
+    const myState = store.getState();
+    console.log(myState);
 
     return (
         <View style={styles.container}>

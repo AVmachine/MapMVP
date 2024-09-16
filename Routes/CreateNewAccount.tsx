@@ -74,6 +74,7 @@ export default function CreateNewAccount({navigation}) {
                 {
                     setHasErrors("");
                     new Promise(res => setTimeout(res, 10000));
+                    navigation.navigate('Root');
                     navigation.navigate('Login');
                 }
             }

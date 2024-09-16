@@ -2,12 +2,15 @@ import {View} from 'react-native';
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
+import {setCurrentPageHomePage, setCurrentPageCreateNewAccount} from "../PageSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {setCurrentTabHome} from "./Roots/TabSlice";
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [hasErrors, setHasErrors] = useState<boolean>(false);
-
+    const dispatch = useDispatch();
 
     async function attemptLogin() {
         let validAttempt: boolean = false;
@@ -25,6 +28,10 @@ export default function Login({navigation}) {
         try {
             if (await attemptLogin()) {
                 setHasErrors(false);
+
+                dispatch(setCurrentPageHomePage());
+                dispatch(setCurrentTabHome());
+                console.log()
                 navigation.navigate('Root');
             } else {
                 console.log('Login failed');
@@ -36,6 +43,7 @@ export default function Login({navigation}) {
     }
 
     const navigateToRegister = () => {
+        dispatch(setCurrentPageCreateNewAccount());
         navigation.navigate('CreateNewAccount');
     }
 
