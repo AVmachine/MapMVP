@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import {RootState} from "./store";
+import {getData} from "./Services/AsyncStorageService";
 //https://redux.js.org/tutorials/essentials/part-2-app-structure
 // Define the TS type for the counter slice's state
 export interface PageState {
@@ -8,8 +8,12 @@ export interface PageState {
 }
 
 // Define the initial value for the slice state
-const initialState: PageState = {
-    currentPage: "Login"
+const initialState = () => {
+    let currentPageAsyncStorage = getData("CurrentPage");
+    console.log("currntpage: " + currentPageAsyncStorage);
+    return {
+        currentPage: currentPageAsyncStorage ? currentPageAsyncStorage : "Login"
+    };
 }
 
 // Slices contain Redux reducer logic for updating state, and

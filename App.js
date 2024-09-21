@@ -14,6 +14,7 @@ import Root from "./Routes/Roots/Root";
 import CreateNewAccount from "./Routes/CreateNewAccount";
 import {configureStore} from "@reduxjs/toolkit";
 import {useEffect, useState} from "react";
+import {storeData} from "./Services/AsyncStorageService";
 
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ export default function App() {
 
     useEffect(() => {
         console.log(myState);
+        storeData("CurrentPage", myState.currentPage);
     }, [myState]);
 
   return (
