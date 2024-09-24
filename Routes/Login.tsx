@@ -1,10 +1,9 @@
 import {View} from 'react-native';
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react';
 import axios from 'axios';
-import {Button, HelperText, Text, TextInput} from "react-native-paper";
-import {setCurrentPageHomePage, setCurrentPageCreateNewAccount} from "../PageSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {setCurrentTabHome} from "./Roots/TabSlice";
+import {Button, HelperText, Text, TextInput} from 'react-native-paper';
+import {saveHomePage, saveRegisterPage} from '../PageSlice';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState<string>('');
@@ -12,11 +11,16 @@ export default function Login({navigation}) {
     const [hasErrors, setHasErrors] = useState<boolean>(false);
     const dispatch = useDispatch();
 
+    const validateEmail = (email: string) => {
+        // Simple email regex for validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     async function attemptLogin() {
-        let validAttempt: boolean = false;
+        let validAttempt = false;
         try {
-            let response =
-                await axios.post('http://localhost:5081/api/UserLogin', {email, password});
+            let response = await axios.post('http://localhost:5081/api/UserLogin', {email, password});
             validAttempt = response.data;
         } catch (error) {
             console.error('Login attempt failed:', error);
@@ -25,13 +29,17 @@ export default function Login({navigation}) {
     }
 
     const login = async () => {
+        if (!validateEmail(email)) {
+            setHasErrors(true);
+            return;
+        }
+
         try {
             if (await attemptLogin()) {
                 setHasErrors(false);
 
-                dispatch(setCurrentPageHomePage());
-                dispatch(setCurrentTabHome());
-                console.log()
+                // Wait for saveHomePage to finish before navigating
+                await dispatch(saveHomePage()).unwrap();
                 navigation.navigate('Root');
             } else {
                 console.log('Login failed');
@@ -40,29 +48,46 @@ export default function Login({navigation}) {
         } catch (error) {
             console.error('Error during login:', error);
         }
-    }
+    };
 
-    const navigateToRegister = () => {
-        dispatch(setCurrentPageCreateNewAccount());
-        navigation.navigate('CreateNewAccount');
-    }
+    const navigateToRegister = async () => {
+        await dispatch(saveRegisterPage()).unwrap();
+        navigation.navigate('Register');
+    };
 
     return (
-
-        <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text style={{marginLeft: 5}} variant="displayLarge">Login</Text>
-            <TextInput autoCapitalize="none" style={{marginBottom: 10}} label="Email" value={email}
-                       onChangeText={(text) => setEmail(text)}/>
-            <TextInput autoCapitalize="none" style={{marginBottom: 10}} secureTextEntry={true} label="Password"
-                       onChangeText={(text) => setPassword(text)}/>
-            <Button onPress={() => login()} mode="outlined" style={{width: 200, marginHorizontal: "auto"}}
-                    buttonColor="grey" textColor="white">Login</Button>
-            <HelperText style={{marginBottom: 5, marginHorizontal: "auto"}} type="error" visible={hasErrors}>
-                Email or Password is invalid.
+        <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
+            <Text style={{marginBottom: 20}} variant="displayLarge">Login</Text>
+            <TextInput
+                autoCapitalize="none"
+                style={{marginBottom: 10}}
+                label="Email"
+                value={email}
+                onChangeText={setEmail}
+            />
+            <TextInput
+                autoCapitalize="none"
+                style={{marginBottom: 10}}
+                secureTextEntry
+                label="Password"
+                value={password}
+                onChangeText={setPassword}
+            />
+            <Button
+                onPress={login}
+                mode="outlined"
+                style={{width: 200, alignSelf: 'center'}}
+                contentStyle={{backgroundColor: 'grey'}}
+                textColor="white"
+            >
+                Login
+            </Button>
+            <HelperText type="error" visible={hasErrors}>
+                {validateEmail(email)
+                    ? 'Email or Password is invalid.'
+                    : 'Please enter a valid email.'}
             </HelperText>
             <Button onPress={navigateToRegister}>Register here</Button>
         </View>
-    )
-
+    );
 }
-

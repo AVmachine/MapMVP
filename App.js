@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 //Routes
 import Login from './Routes/Login'
 import Root from "./Routes/Roots/Root";
-import CreateNewAccount from "./Routes/CreateNewAccount";
+import Register from "./Routes/Register";
 import {configureStore} from "@reduxjs/toolkit";
 import {useEffect, useState} from "react";
 import {storeData} from "./Services/AsyncStorageService";
@@ -35,7 +35,7 @@ export default function App() {
               <NavigationContainer>
                   <Stack.Navigator initialRouteName="Login">
                       <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-                      <Stack.Screen name="CreateNewAccount" component={CreateNewAccount} options={{headerShown: false}} />
+                      <Stack.Screen name="Register" component={Register} options={{headerShown: false}} />
                       <Stack.Screen name="Root" component={Root} options={{ headerBackButtonMenuEnabled: true, headerShown: false }} />
                   </Stack.Navigator>
               </NavigationContainer>

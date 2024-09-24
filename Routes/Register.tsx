@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {View} from "react-native";
 import axios from "axios";
+import {saveHomePage} from "../PageSlice";
+import {useDispatch} from 'react-redux';
 
-export default function CreateNewAccount({navigation}) {
+export default function Register({navigation}) {
 
     const [email, setEmail] = useState<string>('');
     const [password1, setPassword1] = useState<string>('');
@@ -11,6 +13,8 @@ export default function CreateNewAccount({navigation}) {
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
     const [hasErrors, setHasErrors] = useState<string>();
+    const dispatch = useDispatch();
+
 
 
     //check if email is already used
@@ -73,8 +77,7 @@ export default function CreateNewAccount({navigation}) {
                 if(success)
                 {
                     setHasErrors("");
-                    new Promise(res => setTimeout(res, 10000));
-                    navigation.navigate('Root');
+                    await dispatch(saveHomePage()).unwrap();
                     navigation.navigate('Login');
                 }
             }
