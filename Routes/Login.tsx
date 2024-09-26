@@ -12,7 +12,6 @@ export default function Login({navigation}) {
     const dispatch = useDispatch();
 
     const validateEmail = (email: string) => {
-        // Simple email regex for validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };

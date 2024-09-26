@@ -1,10 +1,21 @@
 import MapView from "react-native-maps";
 import {View} from "react-native";
-import React from "react";
+import React, {useEffect} from "react";
 import {Text} from 'react-native-paper';
 import store from "../../store";
+import {useNavigationState} from "@react-navigation/native";
 
 export default function Home() {
+
+    // Get the current navigation state and the index of the active tab
+    const navigationState = useNavigationState(state => state);
+
+// Get the current active tab's route name
+    const currentTab = navigationState.routes[navigationState.index].name;
+
+    useEffect(() => {
+        console.log(currentTab);
+    }, [currentTab]);
 
     const myState = store.getState();
     console.log(myState);

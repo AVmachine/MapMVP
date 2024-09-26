@@ -15,6 +15,8 @@ export default function Root() {
     const dispatch = useDispatch();
     const state = useNavigationState(state => state);
 
+
+
     useEffect(() => {
         const activeTabName = state.routes[state.index].name;
         if(activeTabName == "Home")

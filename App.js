@@ -15,14 +15,19 @@ import Register from "./Routes/Register";
 import {configureStore} from "@reduxjs/toolkit";
 import {useEffect, useState} from "react";
 import {storeData} from "./Services/AsyncStorageService";
+import * as navigationRef from "@reduxjs/toolkit";
 
 
 const Stack = createNativeStackNavigator();
 
-
 export default function App() {
 
     const myState = store.getState();
+    const navState = Stack.state;
+
+    const displayNavState = (state) => {
+        console.log(state);
+    }
 
     useEffect(() => {
         console.log(myState);
@@ -32,7 +37,7 @@ export default function App() {
   return (
       <Provider store={store}>
           <PaperProvider>
-              <NavigationContainer>
+              <NavigationContainer onStateChange={(state) => displayNavState(state)}>
                   <Stack.Navigator initialRouteName="Login">
                       <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
                       <Stack.Screen name="Register" component={Register} options={{headerShown: false}} />
