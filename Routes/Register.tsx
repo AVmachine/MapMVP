@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {View} from "react-native";
 import axios from "axios";
-import {saveHomePage} from "../PageSlice";
+import {saveLoginPage} from "../PageSlice";
 import {useDispatch} from 'react-redux';
 
 export default function Register({navigation}) {
@@ -77,7 +77,6 @@ export default function Register({navigation}) {
                 if(success)
                 {
                     setHasErrors("");
-                    await dispatch(saveHomePage()).unwrap();
                     navigation.navigate('Login');
                 }
             }

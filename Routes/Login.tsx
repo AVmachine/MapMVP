@@ -2,7 +2,6 @@ import {View} from 'react-native';
 import React, {useState} from 'react';
 import axios from 'axios';
 import {Button, HelperText, Text, TextInput} from 'react-native-paper';
-import {saveHomePage, saveRegisterPage} from '../PageSlice';
 import {useDispatch, useSelector} from 'react-redux';
 
 export default function Login({navigation}) {
@@ -37,8 +36,6 @@ export default function Login({navigation}) {
             if (await attemptLogin()) {
                 setHasErrors(false);
 
-                // Wait for saveHomePage to finish before navigating
-                await dispatch(saveHomePage()).unwrap();
                 navigation.navigate('Root');
             } else {
                 console.log('Login failed');
@@ -50,12 +47,11 @@ export default function Login({navigation}) {
     };
 
     const navigateToRegister = async () => {
-        await dispatch(saveRegisterPage()).unwrap();
         navigation.navigate('Register');
     };
 
     return (
-        <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
             <Text style={{marginBottom: 20}} variant="displayLarge">Login</Text>
             <TextInput
                 autoCapitalize="none"
@@ -81,7 +77,7 @@ export default function Login({navigation}) {
             >
                 Login
             </Button>
-            <HelperText type="error" visible={hasErrors}>
+            <HelperText style={{marginBottom: 5, marginHorizontal: "auto"}} type="error" visible={hasErrors}>
                 {validateEmail(email)
                     ? 'Email or Password is invalid.'
                     : 'Please enter a valid email.'}

@@ -3,27 +3,11 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Home from "./Home";
 import Lists from './Lists'
 import {Ionicons} from '@expo/vector-icons';
-import {useNavigationState} from "@react-navigation/native";
-import {useDispatch, useSelector} from "react-redux";
-import {setCurrentPageEmpty, setCurrentTabLists} from "./TabSlice";
 
 const Tab = createBottomTabNavigator();
 
 export default function Root() {
-
     const Tab = createBottomTabNavigator();
-    const dispatch = useDispatch();
-    const state = useNavigationState(state => state);
-
-
-
-    useEffect(() => {
-        const activeTabName = state.routes[state.index].name;
-        if(activeTabName == "Home")
-            dispatch(setCurrentPageEmpty());
-        if(activeTabName == "Lists")
-            dispatch(setCurrentTabLists());
-    }, [state, dispatch]);
 
     return (
         <Tab.Navigator>

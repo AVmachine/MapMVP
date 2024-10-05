@@ -1,38 +1,45 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-export const storeData = async (key, value) => {
+// Function to store a simple string value
+export const storeData = async (key: string, value: string) => {
     try {
         await AsyncStorage.setItem(key, value);
     } catch (e) {
-        // saving error
+        console.error("Error saving data:", e);
     }
 };
-export const storeObjectData = async (key, value) => {
+
+// Function to store an object as a string
+export const storeObjectData = async (key: string, value: any) => {
     try {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem(key, jsonValue);
     } catch (e) {
-        // saving error
+        console.error("Error saving object data:", e);
     }
 };
 
-export const getData = async (key:string) => {
+// Function to retrieve a simple string value
+export const getData = async (key: string) => {
     try {
-        const value = await AsyncStorage.getItem(key);
+        const value = await AsyncStorage.getItem(key);  // Fetch value from AsyncStorage
         if (value !== null) {
-            return value;
+            return value;  // Return the stored value if it's not null
         }
+        return null;  // Return null if no value is found
     } catch (e) {
-        return null;
+        console.error("Error reading data:", e);
+        return null;  // Handle errors and return null
     }
 };
 
-export const getObjectData = async (key:string) => {
+// Function to retrieve and parse an object
+export const getObjectData = async (key: string) => {
     try {
-        const jsonValue = await AsyncStorage.getItem(key);
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
+        const jsonValue = await AsyncStorage.getItem(key);  // Fetch JSON string from AsyncStorage
+        return jsonValue != null ? JSON.parse(jsonValue) : null;  // Parse and return the object if found
     } catch (e) {
-        // error reading value
+        console.error("Error reading object data:", e);
+        return null;  // Handle errors and return null
     }
 };

@@ -8,19 +8,19 @@ export interface PageState {
 }
 
 // Define the thunks where the pages are hardcoded
-export const saveHomePage = createAsyncThunk(
-    'page/saveHomePage',
+export const saveLoginPage = createAsyncThunk(
+    'page/saveLoginPage',
     async (_, { dispatch, rejectWithValue }) => {
         try {
-            const hardcodedPage = 'Home'; // Hardcoded page
+            const hardcodedPage = 'Login'; // Hardcoded page
             await storeData('CurrentPage', hardcodedPage);
 
             // Dispatch an existing reducer to set the current page in the state
-            dispatch(setCurrentPageHome());
+            dispatch(setCurrentPageLogin());
 
             return hardcodedPage;
         } catch (error) {
-            return rejectWithValue('Failed to save the home page');
+            return rejectWithValue('Failed to save the login page');
         }
     }
 );
@@ -72,9 +72,6 @@ export const pageSlice = createSlice({
         setCurrentPageLogin: (state) => {
             state.currentPage = 'Login';
         },
-        setCurrentPageHome: (state) => {
-            state.currentPage = 'Home';
-        },
         setCurrentPageRoot: (state) => {
             state.currentPage = 'Root';
         },
@@ -83,7 +80,7 @@ export const pageSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(saveHomePage.fulfilled, (state, action) => {
+        builder.addCase(saveLoginPage.fulfilled, (state, action) => {
             state.currentPage = action.payload;
         });
         builder.addCase(saveRegisterPage.fulfilled, (state, action) => {
@@ -100,7 +97,6 @@ export const selectCurrentPage = (state: RootState) => state.page.currentPage;
 export const {
     setCurrentPageLogin,
     setCurrentPageRegister,
-    setCurrentPageHome,
     setCurrentPageRoot,
 } = pageSlice.actions;
 
